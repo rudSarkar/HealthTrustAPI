@@ -120,6 +120,22 @@ class PatientController extends Controller
         return response()->json(auth()->user());
     }
 
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Do something method for auth check
+     */
+    public function testme() {
+        if (auth()->user()) {
+            return response()->json(['message' => 'Tested Authorization']);
+        }
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([

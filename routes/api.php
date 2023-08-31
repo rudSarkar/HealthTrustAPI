@@ -25,6 +25,8 @@ Route::middleware(['auth', 'doctor'])->group(function () {
 
 Route::middleware(['auth', 'patient'])->group(function () {
     Route::get('patient/me', [PatientController::class, 'me']);
+    Route::get('patient/testme', [PatientController::class, 'testme']);
+    Route::get('patient/logout', [PatientController::class, 'logout']);
 });
 
 /**

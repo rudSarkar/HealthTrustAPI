@@ -17,7 +17,7 @@ class DoctorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check() && Auth::user()->role != 1) {
-            return response()->json(["message" => "Don't have permission in Doctor!"]);
+            return abort(response()->json(["message" => "Don't have permission in Doctor!"]));
         }
 
         return $next($request);

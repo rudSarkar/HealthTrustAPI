@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check() && Auth::user()->role != 3) {
-            return response()->json(["message" => "Don't have permission in Admin!"]);
+            return abort(response()->json(["message" => "Don't have permission in Admin!"]));
         }
 
         return $next($request);
