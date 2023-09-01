@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\MyInformation;
+use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
@@ -171,8 +172,70 @@ class PatientController extends Controller
     
         return response()->json(['doctor' => $usersWithInformation], 200);
     }
-    
 
+    /**
+     * Read doctor by one
+     */
+    public function get_doctor(Request $request)
+    {
+        $doctorId = $request->input('doctor_id');
+
+        $doctor = User::with('doctor.location')
+        ->where('role', 1)
+        ->where('id', $doctorId)
+        ->first();
+
+        if (!$doctor) {
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+
+        return response()->json(['doctor' => $doctor], 200);
+        
+    }
+    
+    /**
+     * Create appointment
+     */
+    public function create_appointment(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'doctor_id' => 'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 422);
+        }
+
+        $new_appointment = new DoctorAppointment();
+        $new_appointment->user_id = auth()->user()->id;
+        
+        $doctor = User::with('doctor.location')
+        ->where('role', 1)
+        ->where('id', $request->doctor_id)
+        ->first();
+
+        if (!$doctor) {
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+
+        $new_appointment->doctor_id = $request->doctor_id;
+
+        $new_appointment->booking_date = now();
+        $new_appointment->appointment_date = $request->appointment_date;
+
+        $new_appointment->status = 'pending';
+
+        $new_appointment->save();
+        return response()->json(['message' => 'Your appointment has been made!'], 200);
+    }
+
+    /**
+     * All patient appointment
+     */
+    public function all_appointments() {
+        $all_appointments = DoctorAppointment::with(['doctor', 'doctor.user', 'user'])->where('user_id', auth()->user()->id)->get();
+        return response()->json(['appointments' => $all_appointments], 200);
+    }
 
     protected function respondWithToken($token)
     {

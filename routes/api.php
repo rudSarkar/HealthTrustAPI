@@ -35,6 +35,9 @@ Route::middleware(['auth', 'patient'])->group(function () {
      * Patients activities
      */
     Route::get('patient/all_doctors', [PatientController::class, 'get_all_doctors']);
+    Route::get('patient/get_doctor', [PatientController::class, 'get_doctor']);
+    Route::post('patient/appointment', [PatientController::class, 'create_appointment']);
+    Route::get('patient/appointments', [PatientController::class, 'all_appointments']);
 
     Route::get('patient/logout', [PatientController::class, 'logout']);
 });
