@@ -167,7 +167,7 @@ class PatientController extends Controller
      * Get all doctor if patient logged in
      */
     public function get_all_doctors() {
-        $usersWithInformation = User::with(['doctor.location'])->where('role', 1)->get();
+        $usersWithInformation = User::with(['doctor.location'])->where('role', 1)->orderBy('id', 'DESC')->get();
     
         return response()->json(['doctor' => $usersWithInformation], 200);
     }
