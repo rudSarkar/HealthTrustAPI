@@ -24,6 +24,7 @@ return new class extends Migration
              * 3 = Admin
              */
             $table->tinyInteger('role')->default(0);
+
             $table->rememberToken();
             $table->timestamps();
         });

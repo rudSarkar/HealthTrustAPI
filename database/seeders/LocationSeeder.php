@@ -19,7 +19,7 @@ class LocationSeeder extends Seeder
         
         foreach ($districtNames as $district) {
             echo "Inserting data for district: {$district}\n";
-            DB::table('location')->insert([
+            DB::table('locations')->insert([
                 'location_name' => $district,
             ]);
         }

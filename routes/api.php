@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PublicController;
+use App\Http\Controllers\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +22,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'doctor'])->group(function () {
-    
+    Route::get('doctor/me', [DoctorController::class, 'me']);
+    Route::get('doctor/profile', [DoctorController::class, 'profile']);
 });
 
 Route::middleware(['auth', 'patient'])->group(function () {
     Route::get('patient/me', [PatientController::class, 'me']);
-    Route::get('patient/testme', [PatientController::class, 'testme']);
+    Route::post('patient/add_my_information', [PatientController::class, 'add_my_information']);
+    Route::get('patient/get_full_information', [PatientController::class, 'get_full_information']);
+
+    /**
+     * Patients activities
+     */
+    Route::get('patient/all_doctors', [PatientController::class, 'get_all_doctors']);
+
     Route::get('patient/logout', [PatientController::class, 'logout']);
 });
 
@@ -34,3 +44,14 @@ Route::middleware(['auth', 'patient'])->group(function () {
  */
 Route::post('patient/register', [PatientController::class, 'register']);
 Route::post('patient/login', [PatientController::class, 'login']);
+
+/**
+ * Doctor register, login routes
+ */
+Route::post('doctor/register', [DoctorController::class, 'register']);
+Route::post('doctor/login', [DoctorController::class, 'login']);
+
+/**
+ * Other public APIs
+ */
+Route::get('public/location', [PublicController::class, 'get_location']);

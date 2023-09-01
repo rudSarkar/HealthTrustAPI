@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -61,5 +67,103 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor)
     {
         //
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = JWTAuth::fromUser($user);
+            
+            //return response()->json(['token' => $token]);
+
+            return $this->respondWithToken($token);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+    /**
+     * Custom register
+     */
+    public function register(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'specialty' => 'required|string|max:255',
+            'location_id' => 'required|exists:locations,id',
+            'last_education' => 'required|string|max:255',
+            'degrees' => 'required|string|max:255',
+            'about' => 'required|string',
+            'work_experience' => 'required|string',
+            'image' => '',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 422);
+        }
+
+        if ($request->has('doctor_image')) {
+            $imageData = $request->input('doctor_image');
+            $decodedImage = base64_decode($imageData);
+    
+            $imageName = uniqid() . '.jpg';
+    
+            $storagePath = 'public/doctor-images/' . $imageName;
+    
+            Storage::put($storagePath, $decodedImage);
+        } else {
+            $imageName = "public/doctor-images/default.jpeg";
+        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = 1;
+        $user->save();
+        
+        $doctorInformation = new Doctor();
+        $doctorInformation->specialty = $request->specialty;
+        $doctorInformation->location_id = $request->location_id;
+        $doctorInformation->user_id = $user->id;
+        $doctorInformation->last_education = $request->last_education;
+        $doctorInformation->degrees = $request->degrees;
+        $doctorInformation->price = $request->price;
+        $doctorInformation->about = $request->about;
+        $doctorInformation->work_experience = $request->work_experience;
+        $doctorInformation->doctor_image = $request->doctor_image;
+
+        $doctorInformation->save();
+
+        return response()->json(['message' => 'Doctor registered successfully'], 201);
+
+        
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function profile()
+    {
+        $usersWithInformation = User::with(['doctor.location'])->find(auth()->user()->id);
+
+        return response()->json(['users' => $usersWithInformation], 200);
+    }
+
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

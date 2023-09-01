@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             
             $table->unsignedBigInteger('location_id');
-            $table->foreign('location_id')->references('id')->on('location');
+            $table->foreign('location_id')->references('id')->on('locations');
 
             $table->string('location_in_details');
             $table->string('gmap_link');

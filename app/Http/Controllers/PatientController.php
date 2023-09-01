@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\MyInformation;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
@@ -128,13 +129,50 @@ class PatientController extends Controller
     }
 
     /**
-     * Do something method for auth check
+     * Add my_information
      */
-    public function testme() {
-        if (auth()->user()) {
-            return response()->json(['message' => 'Tested Authorization']);
+    public function add_my_information(Request $request) {
+        if(auth()->user()) {
+            $validator = Validator::make($request->all(), [
+                'dob' => 'required',
+                'location_id' => 'required'
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->errors()], 422);
+            }
+
+            $myInformation = new MyInformation();
+            $myInformation->dob = $request->dob;
+            $myInformation->location_id = $request->location_id;
+            $myInformation->user_id = auth()->user()->id;
+            $myInformation->save();
+
+            return response()->json(['message' => 'Information added successfully'], 200);
         }
     }
+
+    /**
+     * Get full information
+     */
+    public function get_full_information() {
+        $usersWithInformation = MyInformation::with(['user', 'location'])
+        ->where('user_id', auth()->user()->id)->first();
+
+        return response()->json(['users' => $usersWithInformation], 200);
+    }
+
+
+    /**
+     * Get all doctor if patient logged in
+     */
+    public function get_all_doctors() {
+        $usersWithInformation = User::with(['doctor.location'])->where('role', 1)->get();
+    
+        return response()->json(['doctor' => $usersWithInformation], 200);
+    }
+    
+
 
     protected function respondWithToken($token)
     {
