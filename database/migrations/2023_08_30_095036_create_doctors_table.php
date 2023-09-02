@@ -27,6 +27,9 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->text('work_experience')->nullable();
             $table->text('doctor_image')->nullable();
+
+            $table->boolean('is_verified')->default(false);
+
             $table->timestamps();
         });
     }

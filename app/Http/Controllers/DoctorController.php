@@ -20,11 +20,16 @@ class DoctorController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = JWTAuth::fromUser($user);
-            
-            //return response()->json(['token' => $token]);
 
-            return $this->respondWithToken($token);
+            $doctor = Doctor::where('user_id', $user->id)->first();
+
+            if ($doctor->is_verified) {
+                $token = JWTAuth::fromUser($user);
+
+                return $this->respondWithToken($token);
+            } else {
+                return response()->json(['error' => 'Wait for admin approval'], 401);
+            }
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
@@ -97,6 +102,7 @@ class DoctorController extends Controller
         $doctorInformation->about = $request->about;
         $doctorInformation->work_experience = $request->work_experience;
         $doctorInformation->doctor_image = $storagePath;
+        $doctorInformation->is_verified = false;
 
         $doctorInformation->save();
 
