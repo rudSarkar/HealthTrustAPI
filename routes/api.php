@@ -49,6 +49,9 @@ Route::middleware(['auth', 'patient'])->group(function () {
     Route::get('patient/appointments', [PatientController::class, 'all_appointments']);
     Route::get('patient/appointment/cancel', [PatientController::class, 'change_appointment_status_cancel']);
 
+
+    Route::get('patient/search_doctor', [PatientController::class, 'search_doctor_by_location_specality']);
+
     Route::get('patient/logout', [PatientController::class, 'logout']);
 });
 

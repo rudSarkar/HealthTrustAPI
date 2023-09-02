@@ -119,6 +119,26 @@ class PatientController extends Controller
         return response()->json(['doctor' => $usersWithInformation], 200);
     }
 
+    public function search_doctor_by_location_specality(Request $request) {
+
+        $location = $request->input('location');
+        $specialty = $request->input('specialty');
+        $query = User::with(['doctor.location'])->where('role', 1);
+
+        if ($location && $specialty) {
+            $query->whereHas('doctor.location', function ($q) use ($location) {
+                $q->where('location_name', 'like', '%' . $location . '%');
+            })->whereHas('doctor', function ($q) use ($specialty) {
+                $q->where('specialty', 'like', '%' . $specialty . '%');
+            });
+        }
+
+        // Execute the query and order by id
+        $usersWithInformation = $query->orderBy('id', 'DESC')->get();
+
+        return response()->json(['doctor' => $usersWithInformation], 200);
+    }
+
     /**
      * Read doctor by one
      */
