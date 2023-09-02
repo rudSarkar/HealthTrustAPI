@@ -24,6 +24,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'doctor'])->group(function () {
     Route::get('doctor/me', [DoctorController::class, 'me']);
     Route::get('doctor/profile', [DoctorController::class, 'profile']);
+    Route::get('doctor/logout', [DoctorController::class, 'logout']);
 });
 
 Route::middleware(['auth', 'patient'])->group(function () {
