@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->json(['message' => 'Server Up and Running'], 200);
+});
+
+Auth::routes();
+
+Route::get('/home', function() {
+    return response()->json(['message' => 'Server Up and Running'], 200);
 });

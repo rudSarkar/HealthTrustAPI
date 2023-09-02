@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\AuthForgotPasswordController;
+use App\Http\Controllers\AuthResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,3 +73,10 @@ Route::post('doctor/login', [DoctorController::class, 'login']);
  * Other public APIs
  */
 Route::get('public/location', [PublicController::class, 'get_location']);
+
+
+/**
+ * Doctor, Patient forget password and reset
+ */
+Route::post('password/forgot', [AuthForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::get('password/reseted', [AuthResetPasswordController::class, 'reset_complete']);
