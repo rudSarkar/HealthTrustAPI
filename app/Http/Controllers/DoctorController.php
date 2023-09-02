@@ -75,7 +75,7 @@ class DoctorController extends Controller
 
             $storagePath = 'storage/doctor-images/'.$filename;
         } else {
-            $storagePath = 'doctor-images/default.jpeg';
+            $storagePath = 'storage/doctor-images/default.jpeg';
         }
             
         
