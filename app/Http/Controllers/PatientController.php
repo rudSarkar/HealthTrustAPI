@@ -209,6 +209,12 @@ class PatientController extends Controller
         $new_appointment = new DoctorAppointment();
         $new_appointment->user_id = auth()->user()->id;
         
+        $doctor = DoctorAppointment::where('doctor_id', $request->doctor_id)->count();
+
+        if($doctor == 10) {
+            return response()->json(['error' => 'can not take more appointment'], 200);
+        }
+
         $doctor = User::with('doctor.location')
         ->where('role', 1)
         ->where('id', $request->doctor_id)
@@ -235,6 +241,20 @@ class PatientController extends Controller
     public function all_appointments() {
         $all_appointments = DoctorAppointment::with(['doctor', 'doctor.user', 'user'])->where('user_id', auth()->user()->id)->get();
         return response()->json(['appointments' => $all_appointments], 200);
+    }
+
+    public function change_appointment_status_cancel(Request $request) {
+        $appointmentId = $request->input('appointment_id');
+
+        $appointment = DoctorAppointment::find($appointmentId);
+
+        if(!$appointment) {
+            return response()->json(['message' => 'Appointment not found'], 404);
+        }
+        
+        if ($appointment->update(['status' => 'cancel']));
+
+        return response()->json(['message' => 'Appointment Canceled'], 200);
     }
 
     protected function respondWithToken($token)

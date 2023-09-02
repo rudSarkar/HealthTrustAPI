@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
@@ -176,9 +177,46 @@ class DoctorController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
+
+    /**
+     * get all appointment
+     */
+    public function get_all_appointments() {
+        $all_appointments = DoctorAppointment::with(['doctor', 'doctor.user', 'user'])->where('doctor_id', auth()->user()->id)->get();
+        return response()->json(['appointments' => $all_appointments], 200);
+    }
+
+    public function change_appointment_status_confirm(Request $request) {
+        $appointmentId = $request->input('appointment_id');
+
+        $appointment = DoctorAppointment::find($appointmentId);
+
+        if(!$appointment) {
+            return response()->json(['message' => 'Appointment not found'], 404);
+        }
+        
+        $appointment->update(['status' => 'confirm']);
+
+        return response()->json(['message' => 'Appointment confirmed'], 200);
+    }
+
+    public function change_appointment_status_cancel(Request $request) {
+        $appointmentId = $request->input('appointment_id');
+
+        $appointment = DoctorAppointment::find($appointmentId);
+
+        if(!$appointment) {
+            return response()->json(['message' => 'Appointment not found'], 404);
+        }
+        
+        if ($appointment->update(['status' => 'cancel']));
+
+        return response()->json(['message' => 'Appointment Canceled'], 200);
+    }
+    
 
     protected function respondWithToken($token)
     {

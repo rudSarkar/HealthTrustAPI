@@ -25,6 +25,14 @@ Route::middleware(['auth', 'doctor'])->group(function () {
     Route::get('doctor/me', [DoctorController::class, 'me']);
     Route::get('doctor/profile', [DoctorController::class, 'profile']);
     Route::get('doctor/logout', [DoctorController::class, 'logout']);
+
+    /**
+     * Doctor appointment
+     */
+    Route::get('doctor/appointments', [DoctorController::class, 'get_all_appointments']);
+    Route::get('doctor/appointment/confirm', [DoctorController::class, 'change_appointment_status_confirm']);
+    Route::get('doctor/appointment/cancel', [DoctorController::class, 'change_appointment_status_cancel']);
+
 });
 
 Route::middleware(['auth', 'patient'])->group(function () {
@@ -39,6 +47,7 @@ Route::middleware(['auth', 'patient'])->group(function () {
     Route::get('patient/get_doctor', [PatientController::class, 'get_doctor']);
     Route::post('patient/appointment', [PatientController::class, 'create_appointment']);
     Route::get('patient/appointments', [PatientController::class, 'all_appointments']);
+    Route::get('patient/appointment/cancel', [PatientController::class, 'change_appointment_status_cancel']);
 
     Route::get('patient/logout', [PatientController::class, 'logout']);
 });

@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('doctor_appointments', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('doctor_id');
+            $table->unsignedBigInteger('doctor_id')->nullable();
             $table->foreign('doctor_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->date('booking_date')->default(now());
-            $table->string('appointment_date');
+            $table->date('booking_date')->default(now())->nullable();
+            $table->string('appointment_date')->nullable();
 
-            $table->string('status')->default('pending');
+            $table->string('status')->default('pending')->nullable();
 
             $table->timestamps();
         });

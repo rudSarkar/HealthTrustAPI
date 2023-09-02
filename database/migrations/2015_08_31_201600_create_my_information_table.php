@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('my_information', function (Blueprint $table) {
             $table->id();
             $table->string('dob');
+            $table->string('phone_number');
+            $table->string('blood_group');
             
             $table->unsignedBigInteger('location_id');
             $table->foreign('location_id')->references('id')->on('locations');
