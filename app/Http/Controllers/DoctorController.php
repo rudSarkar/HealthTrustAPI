@@ -107,18 +107,33 @@ class DoctorController extends Controller
             return response()->json(['message' => $validator->errors()], 422);
         }
 
-        if ($request->has('doctor_image')) {
-            $imageData = $request->input('doctor_image');
-            $decodedImage = base64_decode($imageData);
-    
-            $imageName = uniqid() . '.jpg';
-    
-            $storagePath = 'public/doctor-images/' . $imageName;
-    
-            Storage::put($storagePath, $decodedImage);
+        if ($request->has('doctor_image') && !empty($request->doctor_image)) {
+            $imageData = $request->doctor_image;
+        
+            list($imageType, $base64Image) = explode(';', $imageData);
+            list(, $base64Image) = explode(',', $base64Image);
+        
+            $image_base64 = base64_decode($base64Image);
+        
+            if ($image_base64 === false) {
+                return response()->json(['error' => 'Failed to decode base64 image.'], 400);
+            }
+        
+            $filename = time() . '.' . $imageType;
+            $filename = str_replace('data:image/', '', $filename);
+        
+            $storageDirectory = 'public/doctor-images/';
+        
+            $storagePath = $storageDirectory.$filename;
+        
+            Storage::put($storagePath, $image_base64);
+
+            $storagePath = 'storage/doctor-images/'.$filename;
         } else {
-            $imageName = "public/doctor-images/default.jpeg";
+            $storagePath = 'doctor-images/default.jpeg';
         }
+            
+        
 
         $user = new User();
         $user->name = $request->name;
@@ -136,7 +151,7 @@ class DoctorController extends Controller
         $doctorInformation->price = $request->price;
         $doctorInformation->about = $request->about;
         $doctorInformation->work_experience = $request->work_experience;
-        $doctorInformation->doctor_image = $request->doctor_image;
+        $doctorInformation->doctor_image = $storagePath;
 
         $doctorInformation->save();
 
