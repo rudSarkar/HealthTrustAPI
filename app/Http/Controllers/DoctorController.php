@@ -157,6 +157,13 @@ class DoctorController extends Controller
         return response()->json(['users' => $usersWithInformation], 200);
     }
 
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
 
     protected function respondWithToken($token)
     {
