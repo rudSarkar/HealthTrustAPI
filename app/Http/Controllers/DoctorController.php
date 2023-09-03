@@ -32,7 +32,7 @@ class DoctorController extends Controller
             }
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response()->json(['error' => 'Email and Password wrong!'], 401);
     }
     /**
      * Custom register

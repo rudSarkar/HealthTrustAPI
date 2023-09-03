@@ -14,4 +14,28 @@ class AdminController extends Controller
         $all_appointments = DoctorAppointment::with(['doctor', 'doctor.user', 'user'])->get();
         return response()->json(['appointments' => $all_appointments], 200);
     }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = JWTAuth::fromUser($user);
+            
+
+            return $this->respondWithToken($token);
+        }
+
+        return response()->json(['error' => 'Email and Password wrong!'], 401);
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
+    }
 }

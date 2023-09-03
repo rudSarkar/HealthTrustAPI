@@ -25,13 +25,11 @@ class PatientController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = JWTAuth::fromUser($user);
-            
-            //return response()->json(['token' => $token]);
 
             return $this->respondWithToken($token);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response()->json(['error' => 'Email and Password wrong!'], 401);
     }
     /**
      * Custom register
