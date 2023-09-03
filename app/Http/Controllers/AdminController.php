@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\User;
 use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,7 @@ class AdminController extends Controller
         return response()->json(['doctor' => $doctor], 200);
     }
 
-    public function get_verified_doctor_profiles() {
+    public function get_non_verified_doctor_profiles() {
 
         $doctor = User::with('doctor.location')
         ->where('role', 1)
@@ -73,6 +74,24 @@ class AdminController extends Controller
         }
 
         return response()->json(['doctor' => $doctor], 200);
+    }
+
+    public function verify_doctor(Request $request) {
+        $doctorId = $request->input('doctor_id');
+
+        $verify_doctor = User::with('doctor.location')
+                            ->where('role', 1)
+                            ->find($doctorId);
+
+        if(!$verify_doctor) {
+            return response()->json(['message' => 'Doctor not found'], 404);
+        }
+        
+        $doctor = $verify_doctor->doctor;
+        $doctor->is_verified = 1;
+        $doctor->save();
+        
+        return response()->json(['message' => 'Doctor Profile Verified!'], 200);
     }
 
     protected function respondWithToken($token)
