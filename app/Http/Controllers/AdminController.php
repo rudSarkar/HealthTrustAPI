@@ -43,6 +43,19 @@ class AdminController extends Controller
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
+    public function get_doctor_profiles() {
+
+        $doctor = User::with('doctor.location')
+        ->where('role', 1)
+        ->get();
+
+        if (!$doctor) {
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+
+        return response()->json(['doctor' => $doctor], 200);
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([

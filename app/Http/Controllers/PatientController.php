@@ -148,6 +148,7 @@ class PatientController extends Controller
         $doctor = User::with('doctor.location')
         ->where('role', 1)
         ->where('id', $doctorId)
+        ->where('is_verified', 1)
         ->first();
 
         if (!$doctor) {
