@@ -53,6 +53,7 @@ Route::middleware(['auth', 'patient'])->group(function () {
 
 
     Route::get('patient/search_doctor', [PatientController::class, 'search_doctor_by_location_specality']);
+    Route::get('patient/search_ambulance', [PatientController::class, 'search_ambulance']);
 
     Route::get('patient/logout', [PatientController::class, 'logout']);
 });

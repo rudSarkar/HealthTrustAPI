@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\Ambulance;
 use App\Models\MyInformation;
 use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
@@ -223,6 +224,19 @@ class PatientController extends Controller
         return response()->json(['message' => 'Appointment Canceled'], 200);
     }
 
+    public function search_ambulance(Request $request) {
+
+        $location = $request->query('location');
+
+        $searched_ambulance = Ambulance::with(['location'])
+        ->whereHas('location', function ($query) use ($location) {
+            $query->where('location_name', $location);
+        })
+        ->get();
+
+        return response()->json(['message' => $searched_ambulance], 200);
+    }
+    
     protected function respondWithToken($token)
     {
         return response()->json([
