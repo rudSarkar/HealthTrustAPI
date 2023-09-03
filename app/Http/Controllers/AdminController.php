@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -28,6 +29,11 @@ class AdminController extends Controller
         }
 
         return response()->json(['error' => 'Email and Password wrong!'], 401);
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
     }
 
     protected function respondWithToken($token)
