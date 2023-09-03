@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthForgotPasswordController;
 use App\Http\Controllers\AuthResetPasswordController;
 
@@ -20,7 +21,7 @@ use App\Http\Controllers\AuthResetPasswordController;
 */
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    
+    Route::get('admin/all_appointments', [AdminController::class, 'get_all_appointments']);
 });
 
 Route::middleware(['auth', 'doctor'])->group(function () {
