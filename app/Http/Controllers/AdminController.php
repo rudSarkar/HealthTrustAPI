@@ -59,6 +59,22 @@ class AdminController extends Controller
         return response()->json(['doctor' => $doctor], 200);
     }
 
+    public function get_verified_doctor_profiles() {
+
+        $doctor = User::with('doctor.location')
+        ->where('role', 1)
+        ->whereHas('doctor', function ($query) {
+            $query->where('is_verified', 0);
+        })
+        ->get();
+
+        if (!$doctor) {
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+
+        return response()->json(['doctor' => $doctor], 200);
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([
