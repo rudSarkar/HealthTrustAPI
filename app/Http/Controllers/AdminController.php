@@ -43,10 +43,13 @@ class AdminController extends Controller
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
-    public function get_doctor_profiles() {
+    public function get_verified_doctor_profiles() {
 
         $doctor = User::with('doctor.location')
         ->where('role', 1)
+        ->whereHas('doctor', function ($query) {
+            $query->where('is_verified', 1);
+        })
         ->get();
 
         if (!$doctor) {

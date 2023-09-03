@@ -113,7 +113,12 @@ class PatientController extends Controller
      * Get all doctor if patient logged in
      */
     public function get_all_doctors() {
-        $usersWithInformation = User::with(['doctor.location'])->where('role', 1)->orderBy('id', 'DESC')->get();
+        $usersWithInformation = User::with(['doctor.location'])
+        ->where('role', 1)
+        ->whereHas('doctor', function ($query) {
+            $query->where('is_verified', 1);
+        })
+        ->orderBy('id', 'DESC')->get();
     
         return response()->json(['doctor' => $usersWithInformation], 200);
     }
@@ -148,7 +153,9 @@ class PatientController extends Controller
         $doctor = User::with('doctor.location')
         ->where('role', 1)
         ->where('id', $doctorId)
-        ->where('is_verified', 1)
+        ->whereHas('doctor', function ($query) {
+            $query->where('is_verified', 1);
+        })
         ->first();
 
         if (!$doctor) {

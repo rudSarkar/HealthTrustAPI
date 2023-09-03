@@ -25,7 +25,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/profile', [AdminController::class, 'me']);
     Route::get('admin/logout', [AdminController::class, 'logout']);
     Route::get('admin/all_appointments', [AdminController::class, 'get_all_appointments']);
-    Route::get('admin/all_doctors', [AdminController::class, 'get_doctor_profiles']);
+    Route::get('admin/verified_doctors', [AdminController::class, 'get_verified_doctor_profiles']);
 
 });
 
