@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\Ambulance;
+use App\Models\Doctor;
 use App\Models\MyInformation;
 use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
@@ -12,6 +13,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
 
 class PatientController extends Controller
 {
@@ -215,10 +218,17 @@ class PatientController extends Controller
     /**
      * All patient appointment
      */
-    public function all_appointments() {
-        $all_appointments = DoctorAppointment::with(['doctor', 'doctor.user', 'user'])->where('user_id', auth()->user()->id)->get();
+
+     public function all_appointments() {
+        $user_id = auth()->user()->id;
+    
+        $all_appointments = DoctorAppointment::with('user', 'doctor')->where('user_id', $user_id)->get();
+    
         return response()->json(['appointments' => $all_appointments], 200);
     }
+    
+    
+    
 
     public function change_appointment_status_cancel(Request $request) {
         $appointmentId = $request->input('appointment_id');

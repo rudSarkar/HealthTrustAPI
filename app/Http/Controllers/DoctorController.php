@@ -135,7 +135,9 @@ class DoctorController extends Controller
      * get all appointment
      */
     public function get_all_appointments() {
-        $all_appointments = DoctorAppointment::with(['doctor', 'doctor.user', 'user'])->where('doctor_id', auth()->user()->id)->get();
+        $user_id = auth()->user()->id;
+    
+        $all_appointments = DoctorAppointment::with('user', 'doctor')->where('doctor_id', $user_id)->get();
         return response()->json(['appointments' => $all_appointments], 200);
     }
 
