@@ -127,7 +127,11 @@ class PatientController extends Controller
 
         $location = $request->input('location');
         $specialty = $request->input('specialty');
-        $query = User::with(['doctor.location'])->where('role', 1);
+        $query = User::with(['doctor.location'])
+        ->where('role', 1)
+        ->whereHas('doctor', function ($query) {
+            $query->where('is_verified', 1);
+        });
 
         if ($location && $specialty) {
             $query->whereHas('doctor.location', function ($q) use ($location) {
