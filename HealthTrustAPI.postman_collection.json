@@ -1296,6 +1296,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Admin Add Ambulance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM4MjY2NDgsImV4cCI6MTY5MzgzMDI0OCwibmJmIjoxNjkzODI2NjQ4LCJqdGkiOiI1Y0ZFdVI1aXhjRzRxTVpoIiwic3ViIjoiNSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.sNSgJouXWJ9rBo0HV22SWaE6-FNwUOaH62Sr8eTAJhs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Bongobondhu Hospital\",\n    \"location_id\": \"8\",\n    \"location_in_details\": \"In details location\",\n    \"gmap_link\": \"https://maps.google.com/sdgsg\",\n    \"ambulance_number\": \"01712345, 0123435\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/admin/add/ambulance",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"add",
+								"ambulance"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
