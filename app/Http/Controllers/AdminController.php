@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\Ambulance;
 use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -92,6 +94,31 @@ class AdminController extends Controller
         $doctor->save();
         
         return response()->json(['message' => 'Doctor Profile Verified!'], 200);
+    }
+
+    public function add_ambulance(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'location_id' => 'required',
+            'location_in_details' => 'required',
+            'ambulance_number' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 422);
+        }
+
+        $addAmbulnace = new Ambulance();
+        $addAmbulnace->name = $request->name;
+        $addAmbulnace->location_id = $request->location_id;
+        $addAmbulnace->location_in_details = $request->location_in_details;
+        $addAmbulnace->gmap_link = $request->gmap_link;
+        $addAmbulnace->ambulance_number = $request->ambulance_number;
+
+        $addAmbulnace->save();
+
+        return response()->json(['message' => 'Ambulance added'], 200);
     }
 
     protected function respondWithToken($token)
