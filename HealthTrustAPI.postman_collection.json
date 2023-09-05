@@ -1286,7 +1286,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM3NDc5NDgsImV4cCI6MTY5Mzc1MTU0OCwibmJmIjoxNjkzNzQ3OTQ4LCJqdGkiOiJKRUNKaTZhRU5MUHpzNzVQIiwic3ViIjoiNSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.JZPWXpiiektUwWnn8tp8lNJ9OaM4kMPce5Dtd8E0bx4",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM5MTU1MzcsImV4cCI6MTY5MzkxOTEzNywibmJmIjoxNjkzOTE1NTM3LCJqdGkiOiJveXRSMzNBTFZUTUtZN21LIiwic3ViIjoiNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.u6VzI88Ry0k0evzoS--0zPLJiZq3kgdiLmFtY-dq_gs",
 									"type": "string"
 								}
 							]
@@ -1294,7 +1294,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/admin/verified_doctors",
+							"raw": "http://127.0.0.1:8000/api/admin/not_verified_doctors",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1306,7 +1306,7 @@
 							"path": [
 								"api",
 								"admin",
-								"verified_doctors"
+								"not_verified_doctors"
 							]
 						}
 					},
