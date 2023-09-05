@@ -277,7 +277,7 @@ class PatientController extends Controller
             return response()->json(['message' => $validator->errors()], 422);
         }
 
-        $command = 'python3 python_script/main.py ' .
+        $command = '/venv/bin/python python_script/main.py ' .
                escapeshellarg($symptom1) . ' ' .
                escapeshellarg($symptom2) . ' ' .
                escapeshellarg($symptom3) . ' ' .

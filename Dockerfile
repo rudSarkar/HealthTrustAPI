@@ -37,9 +37,12 @@ RUN python3 -m venv /venv
 # Activate the virtual environment and install Python dependencies
 RUN /venv/bin/python -m pip install -r public/python_script/requirements.txt
 
-RUN chmod 777 build.sh
+RUN . /venv/bin/activate
 
-RUN ./build.sh
+RUN php artisan migrate
+RUN artisan BangladeshGeocode:setup
+RUN artisan db:seed --verbose
+RUN artisan storage:link
 
 # Expose the port where PHP-FPM will listen
 EXPOSE 8000
