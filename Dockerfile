@@ -1,31 +1,48 @@
 # Use an official PHP runtime as a parent image
-FROM php:8.2-fpm
+FROM php:8.2.8-fpm
 
-# Set the working directory to /app
+# Set the working directory in the container
 WORKDIR /var/www/html
 
-# Install system dependencies and PHP extensions
-RUN apt-get update && apt-get install -y \
-    git \
-    zip \
-    unzip \
+# Install system dependencies for PHP and Python
+RUN apt-get update && \
+    apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    libzip-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql zip
+    zip \
+    unzip \
+    git \
+    python3 \
+    python3-pip \
+    python3.11-venv \
+    && rm -rf /var/lib/apt/lists/* 
 
-# Install Composer
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd pdo pdo_mysql
+
+# Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copy the local Laravel code to the container
+# Copy the Laravel application files into the container
 COPY . .
 
-# Install Laravel dependencies
+# Install Laravel application dependencies using Composer
 RUN composer install
 
-# Expose port 8000 and start PHP-FPM
+# Create a virtual environment for Python
+RUN python3 -m venv /venv
+
+# Activate the virtual environment and install Python dependencies
+RUN /venv/bin/python -m pip install -r public/python_script/requirements.txt
+
+RUN chmod 777 build.sh
+
+RUN ./build.sh
+
+# Expose the port where PHP-FPM will listen
 EXPOSE 8000
 
+# Start PHP-FPM
 CMD ["php-fpm"]

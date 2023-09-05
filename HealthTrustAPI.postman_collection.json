@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"rudra@mail.com\",\n    \"password\": \"12345678\"\n}",
+							"raw": "{\n    \"email\": \"rudra@mail.com\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -423,7 +423,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM2NjY0NjIsImV4cCI6MTY5MzY3MDA2MiwibmJmIjoxNjkzNjY2NDYyLCJqdGkiOiJVTGNqMXFYdW1xQ1R5WHpUIiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.2WE6RyBOXu_mCnmOmfxS1gnWqUMyVYalT8iDebJwz8E",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM4NDM3NTYsImV4cCI6MTY5Mzg0NzM1NiwibmJmIjoxNjkzODQzNzU2LCJqdGkiOiJGOXR6Y2ZJRDFYT1NINmdmIiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.hA9DS-JyDB2p5WdnabpB8ZyO90kIarEwFLkM7SLx57Q",
 									"type": "string"
 								}
 							]
@@ -602,6 +602,62 @@
 								"api",
 								"password",
 								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Predict Disease",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM5MDUyMjcsImV4cCI6MTY5MzkwODgyNywibmJmIjoxNjkzOTA1MjI3LCJqdGkiOiJtYUtUMVR2MXI5WTNQNlZWIiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ni0Gn7-fJQOC8a2cg9lwGhSmAurH8y1m_wPlObQ6urI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/patient/disease_predict?symptom1=itching&symptom2=skin rash&symptom3=nodal skin eruptions&symptom4=continuous sneezing&symptom5=shivering",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"patient",
+								"disease_predict"
+							],
+							"query": [
+								{
+									"key": "symptom1",
+									"value": "itching"
+								},
+								{
+									"key": "symptom2",
+									"value": "skin rash"
+								},
+								{
+									"key": "symptom3",
+									"value": "nodal skin eruptions"
+								},
+								{
+									"key": "symptom4",
+									"value": "continuous sneezing"
+								},
+								{
+									"key": "symptom5",
+									"value": "shivering"
+								}
 							]
 						}
 					},

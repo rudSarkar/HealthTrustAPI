@@ -256,6 +256,38 @@ class PatientController extends Controller
 
         return response()->json(['message' => $searched_ambulance], 200);
     }
+
+    public function predict_disease(Request $request)
+    {
+        $symptom1 = $request->query('symptom1');
+        $symptom2 = $request->query('symptom2');
+        $symptom3 = $request->query('symptom3');
+        $symptom4 = $request->query('symptom4');
+        $symptom5 = $request->query('symptom5');
+
+        $validator = Validator::make($request->all(), [
+            'symptom1' => 'required',
+            'symptom2' => 'required',
+            'symptom3' => 'required',
+            'symptom4' => 'required',
+            'symptom5' => 'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 422);
+        }
+
+        $command = 'python3 python_script/main.py ' .
+               escapeshellarg($symptom1) . ' ' .
+               escapeshellarg($symptom2) . ' ' .
+               escapeshellarg($symptom3) . ' ' .
+               escapeshellarg($symptom4) . ' ' .
+               escapeshellarg($symptom5) . ' 2>&1';
+        
+        $output = exec($command);
+
+        return response()->json(['message' => $output]);
+    }
     
     protected function respondWithToken($token)
     {
