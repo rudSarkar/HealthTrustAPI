@@ -39,11 +39,6 @@ RUN /venv/bin/python -m pip install -r public/python_script/requirements.txt
 
 RUN . /venv/bin/activate
 
-RUN php artisan migrate
-RUN artisan BangladeshGeocode:setup
-RUN artisan db:seed --verbose
-RUN artisan storage:link
-
 # Expose the port where PHP-FPM will listen
 EXPOSE 8000
 
