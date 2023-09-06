@@ -222,7 +222,7 @@ class PatientController extends Controller
      public function all_appointments() {
         $user_id = auth()->user()->id;
     
-        $all_appointments = DoctorAppointment::with('user', 'doctor')->where('user_id', $user_id)->get();
+        $all_appointments = DoctorAppointment::with('user', 'doctor', 'doctor.user')->where('user_id', $user_id)->get();
     
         return response()->json(['appointments' => $all_appointments], 200);
     }
