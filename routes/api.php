@@ -29,6 +29,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/not_verified_doctors', [AdminController::class, 'get_non_verified_doctor_profiles']);
     Route::get('admin/doctor/verify', [AdminController::class, 'verify_doctor']);
     Route::post('admin/add/ambulance', [AdminController::class, 'add_ambulance']);
+    Route::get('admin/all_patients', [AdminController::class, 'all_patients']);
+    Route::get('admin/delete_patient', [AdminController::class, 'delete_single_patient']);
 });
 
 Route::middleware(['auth', 'doctor'])->group(function () {

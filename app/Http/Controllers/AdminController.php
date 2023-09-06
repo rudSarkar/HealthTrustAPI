@@ -121,6 +121,25 @@ class AdminController extends Controller
         return response()->json(['message' => 'Ambulance added'], 200);
     }
 
+    public function all_patients() {
+        $patients = User::where('role', 0)->get();
+        return response()->json(['patients' => $patients], 200);
+    }
+
+    public function delete_single_patient(Request $request)
+    {
+        $userId = $request->input('patient_id');
+        $user = User::where('role', 0)->find($userId);
+
+        if (!$user) {
+            return response()->json(['message' => 'Patient not found'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'Patient deleted sucessfully.'], 200);
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([

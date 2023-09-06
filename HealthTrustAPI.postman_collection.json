@@ -380,7 +380,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM3NDY1NDIsImV4cCI6MTY5Mzc1MDE0MiwibmJmIjoxNjkzNzQ2NTQyLCJqdGkiOiJ5b2g1N09JUTRiRXNWTGM4Iiwic3ViIjoiNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.lodp1VQUunSAss9ahaFjUf7ebNup0T2zKOevXixKNKc",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM5MTU4MDksImV4cCI6MTY5MzkxOTQwOSwibmJmIjoxNjkzOTE1ODA5LCJqdGkiOiJGN1lNMnBlTnh0Mk9QZkhnIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.KrrWeTECWmNsp-wbY_GswGXb040rGVEFGeDdbdK44Q4",
 									"type": "string"
 								}
 							]
@@ -423,7 +423,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM4NDM3NTYsImV4cCI6MTY5Mzg0NzM1NiwibmJmIjoxNjkzODQzNzU2LCJqdGkiOiJGOXR6Y2ZJRDFYT1NINmdmIiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.hA9DS-JyDB2p5WdnabpB8ZyO90kIarEwFLkM7SLx57Q",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM5MTU4MDksImV4cCI6MTY5MzkxOTQwOSwibmJmIjoxNjkzOTE1ODA5LCJqdGkiOiJGN1lNMnBlTnh0Mk9QZkhnIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.KrrWeTECWmNsp-wbY_GswGXb040rGVEFGeDdbdK44Q4",
 									"type": "string"
 								}
 							]
@@ -1098,6 +1098,80 @@
 								"api",
 								"admin",
 								"all_appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin all patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTM3NDY0NDUsImV4cCI6MTY5Mzc1MDA0NSwibmJmIjoxNjkzNzQ2NDQ1LCJqdGkiOiJPYng3S2JkVDF5QXJzYkdzIiwic3ViIjoiNSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.i6MydRcxtFeO69QCH6sb-PWWy1KUOxGpN4Iv3CTa8D4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/admin/all_appointments",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"all_appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin delete single patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3BhdGllbnQvbG9naW4iLCJpYXQiOjE2OTQwMjY2MzYsImV4cCI6MTY5NDAzMDIzNiwibmJmIjoxNjk0MDI2NjM2LCJqdGkiOiJHeERJSGdjckFaeTFKVllhIiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LkLxhIq1QOOjBRLHVNbTVjowJ3wpa5EaBBVgCfbAV1c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/admin/delete_patient?patient_id=2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"delete_patient"
+							],
+							"query": [
+								{
+									"key": "patient_id",
+									"value": "2"
+								}
 							]
 						}
 					},
