@@ -30,6 +30,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('admin/add/ambulance', [AdminController::class, 'add_ambulance']);
     Route::get('admin/all_patients', [AdminController::class, 'all_patients']);
     Route::get('admin/delete_patient', [AdminController::class, 'delete_single_patient']);
+
+    Route::get('patient/disease_predict', [PatientController::class, 'predict_disease']);
 });
 
 Route::middleware(['auth', 'doctor'])->group(function () {
@@ -43,6 +45,8 @@ Route::middleware(['auth', 'doctor'])->group(function () {
     Route::get('doctor/appointments', [DoctorController::class, 'get_all_appointments']);
     Route::get('doctor/appointment/confirm', [DoctorController::class, 'change_appointment_status_confirm']);
     Route::get('doctor/appointment/cancel', [DoctorController::class, 'change_appointment_status_cancel']);
+
+    Route::get('patient/disease_predict', [PatientController::class, 'predict_disease']);
 
 });
 
