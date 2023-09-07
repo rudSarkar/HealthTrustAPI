@@ -60,9 +60,6 @@ Route::middleware(['auth', 'patient'])->group(function () {
     Route::get('patient/appointments', [PatientController::class, 'all_appointments']);
     Route::get('patient/appointment/cancel', [PatientController::class, 'change_appointment_status_cancel']);
 
-
-    Route::get('patient/search_doctor', [PatientController::class, 'search_doctor_by_location_specality']);
-    Route::get('patient/search_ambulance', [PatientController::class, 'search_ambulance']);
     Route::get('patient/disease_predict', [PatientController::class, 'predict_disease']);
 
     Route::get('patient/logout', [PatientController::class, 'logout']);
@@ -96,3 +93,9 @@ Route::get('password/reseted', [AuthResetPasswordController::class, 'reset_compl
  * admin login
  */
 Route::post('admin/login', [AdminController::class, 'login']);
+
+/**
+ * Search functionality free without token
+ */
+Route::get('patient/search_doctor', [PatientController::class, 'search_doctor_by_location_specality']);
+Route::get('patient/search_ambulance', [PatientController::class, 'search_ambulance']);
