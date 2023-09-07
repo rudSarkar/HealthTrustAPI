@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Ambulance;
 use App\Models\DoctorAppointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class AdminController extends Controller
 {

@@ -21,7 +21,6 @@ use App\Http\Controllers\AuthResetPasswordController;
 */
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('admin/login', [AdminController::class, 'login']);
     Route::get('admin/profile', [AdminController::class, 'me']);
     Route::get('admin/logout', [AdminController::class, 'logout']);
     Route::get('admin/all_appointments', [AdminController::class, 'get_all_appointments']);
@@ -92,3 +91,8 @@ Route::get('public/location', [PublicController::class, 'get_location']);
  */
 Route::post('password/forgot', [AuthForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::get('password/reseted', [AuthResetPasswordController::class, 'reset_complete']);
+
+/**
+ * admin login
+ */
+Route::post('admin/login', [AdminController::class, 'login']);
