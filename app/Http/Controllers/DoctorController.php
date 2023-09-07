@@ -176,7 +176,9 @@ class DoctorController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'role' => auth()->user()->role
+            'role' => auth()->user()->role,
+            'name' => auth()->user()->name,
+            'email' => auth()->user()->email
         ]);
     }
 }
